@@ -9,12 +9,15 @@ import io
 import os
 import time
 import tkinter as tk
-import PIL.Image
-import PIL.ImageTk
+import PIL
+# import PIL.Image
+# import PIL.ImageTk
 import mutagen.mp3
 from mutagen.id3 import APIC
 
 from itunesart import findAlbumArt
+from PIL import Image
+from PIL import ImageTk
 
 
 class Gui(tk.Tk):
@@ -32,7 +35,7 @@ class Gui(tk.Tk):
         self.title("iTunes Art Downloader")
 
         self.imageSize = 250
-        self.downloadSize = 800
+        self.downloadSize = 1000
         self.autocloseinseconds = 3
 
         self._resultWidgets = []
