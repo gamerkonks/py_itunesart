@@ -41,7 +41,7 @@ def __getTracks(collectionId):
     return data
 
 
-def iTunesFindAlbum(search, dimensions=(600, 600, 'bb')):
+def iTunesFindAlbum(search, dimensions=(1000, 1000, 'bb')):
     data = __getArt(search, "album", "us")
 
     results = []
@@ -60,7 +60,7 @@ def iTunesFindAlbum(search, dimensions=(600, 600, 'bb')):
 
     return results
 
-def iTunesFindSong(search, dimensions=(600, 600, 'bb')):
+def iTunesFindSong(search, dimensions=(1000, 1000, 'bb')):
     data = __getArt(search, "song", "us")
 
     results = []
@@ -151,22 +151,8 @@ def setStuff(filename, title=None, artist=None, albumArtist=None, album=None, tr
     if album is not None:
         audio["TALB"] = TALB(encoding=3, text=album)
 
-    if track is not None and totalTracks is not None:
-        if totalTracks > 99:
-            audio["TRCK"] = TRCK(
-                encoding=3, text="%03d/%03d" %
-                (int(track), int(totalTracks)))
-        elif totalTracks > 9:
-            audio["TRCK"] = TRCK(
-                encoding=3, text="%02d/%02d" %
-                (int(track), int(totalTracks)))
-        else:
-            audio["TRCK"] = TRCK(
-                encoding=3, text="%d/%d" %
-                (int(track), int(totalTracks)))
-
-    elif track is not None:
-        audio["TRCK"] = TRCK(encoding=3, text="%02d" % int(track))
+    if track is not None:
+        audio["TRCK"] = TRCK(encoding=3, text="%d" % int(track))
 
     if year is not None:
         audio["TDRC"] = TDRC(encoding=3, text=str(year))
@@ -240,7 +226,7 @@ def getSongInfoString(metadata):
         albuminfo += " - %s" % metadata["TALB"]
 
     if "TRCK" in metadata and metadata["TRCK"]:
-        trck = metadata["TRCK"].split("/")[1]
+        trck = metadata["TRCK"].split("/")[0]
         albuminfo += " (#%s)" % str(metadata["TRCK"])
 
     return albuminfo, guess
